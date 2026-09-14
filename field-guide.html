@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="logo.png">
+<title>ZollaS's Random Bow Mod Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F2F4F1;
+  --surface:#FFFFFF;
+  --surface-sunk:#E9ECE8;
+  --ink:#171C19;
+  --ink-soft:#3D4741;
+  --muted:#68746D;
+  --line:#DCE1DB;
+  --line-soft:#E7EBE5;
+  --ember:#A8481A;
+  --ember-bg:#F7E9E0;
+  --pine:#2A6350;
+  --pine-bg:#E3EDE8;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#111512;
+    --surface:#191F1B;
+    --surface-sunk:#141916;
+    --ink:#E8ECE7;
+    --ink-soft:#C2CBC4;
+    --muted:#8E9A93;
+    --line:#2A322D;
+    --line-soft:#222925;
+    --ember:#E28C51;
+    --ember-bg:#2E2118;
+    --pine:#77C4A2;
+    --pine-bg:#16261F;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#111512;
+  --surface:#191F1B;
+  --surface-sunk:#141916;
+  --ink:#E8ECE7;
+  --ink-soft:#C2CBC4;
+  --muted:#8E9A93;
+  --line:#2A322D;
+  --line-soft:#222925;
+  --ember:#E28C51;
+  --ember-bg:#2E2118;
+  --pine:#77C4A2;
+  --pine-bg:#16261F;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px 96px}
+
+/* ---------- masthead ---------- */
+.mast{padding:56px 0 32px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 14px;
+}
+h1{
+  font-family:var(--display);font-weight:600;font-size:clamp(34px,5.2vw,52px);
+  line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance;
+}
+.sub{margin:14px 0 0;max-width:62ch;color:var(--ink-soft);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;padding:5px 11px;
+  background:var(--surface);border:1px solid var(--line);border-radius:3px;color:var(--ink-soft);
+}
+.chip b{font-weight:500;color:var(--muted);font-family:var(--body);margin-right:7px}
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:184px minmax(0,1fr);gap:56px;align-items:start}
+@media (max-width:860px){.cols{grid-template-columns:1fr;gap:0}nav.rail{display:none}}
+nav.rail{position:sticky;top:36px;padding-top:52px}
+nav.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav.rail a{
+  display:block;padding:5px 0;font-size:13.5px;color:var(--muted);
+  text-decoration:none;border-left:2px solid transparent;padding-left:12px;
+}
+nav.rail a:hover,nav.rail a:focus-visible{color:var(--ink);border-left-color:var(--ember)}
+
+section{padding-top:52px}
+h2{
+  font-family:var(--display);font-weight:500;font-size:24px;letter-spacing:-.01em;
+  margin:0 0 6px;text-wrap:balance;
+}
+.lede{margin:0 0 26px;color:var(--muted);font-size:15px;max-width:64ch}
+
+/* ---------- diagram ---------- */
+.figure{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px;overflow-x:auto}
+.figure svg{display:block;min-width:660px;width:100%;height:auto}
+.cap{margin:14px 0 0;font-size:13.5px;color:var(--muted);max-width:66ch}
+text{font-family:"IBM Plex Sans",system-ui,sans-serif}
+
+/* ---------- file map ---------- */
+.group{margin-bottom:28px}
+.grouphead{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.grouppath{font-family:var(--mono);font-size:13px;color:var(--ink-soft)}
+.tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;
+}
+.tag.srv{background:var(--pine-bg);color:var(--pine)}
+.tag.cli{background:var(--ember-bg);color:var(--ember)}
+.tag.cfg{background:var(--surface-sunk);color:var(--muted)}
+table{width:100%;border-collapse:collapse}
+tbody tr{border-top:1px solid var(--line-soft)}
+tbody tr:first-child{border-top:1px solid var(--line)}
+td{padding:9px 12px 9px 0;vertical-align:baseline}
+td.f{font-family:var(--mono);font-size:13.5px;color:var(--ink);white-space:nowrap}
+td.r{color:var(--muted);font-size:14.5px;width:100%}
+td.n{
+  font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  text-align:right;padding-left:14px;padding-right:0;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+th.n{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--muted);
+  text-align:right;padding:0 0 6px 14px;white-space:nowrap;
+}
+
+/* ---------- gotchas ---------- */
+.traps{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.trap{background:var(--surface);padding:18px 20px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px}
+.num{
+  font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--ember);
+  padding-top:2px;font-variant-numeric:tabular-nums;
+}
+.trap h3{margin:0 0 4px;font-family:var(--body);font-size:15.5px;font-weight:600;letter-spacing:-.005em}
+.trap p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+.trap p + p{margin-top:6px;color:var(--muted);font-size:14px}
+code{
+  font-family:var(--mono);font-size:.9em;background:var(--surface-sunk);
+  padding:1.5px 5px;border-radius:3px;color:var(--ink);
+}
+.trap p code{background:var(--ground)}
+
+/* ---------- build ---------- */
+.env{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.cell{background:var(--surface);padding:17px 19px}
+.cell dt{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 7px;font-family:var(--mono)}
+.cell dd{margin:0;font-family:var(--mono);font-size:13.5px;color:var(--ink);word-break:break-word;line-height:1.5}
+.cell .why{font-family:var(--body);font-size:13.5px;color:var(--muted);margin-top:7px;line-height:1.5}
+
+footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+a{color:var(--ember)}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<p style="margin:0;padding-top:24px;font-size:14px"><a href="index.html">&larr; Player guide</a></p>
+
+<header class="mast">
+  <p class="eyebrow">Fabric mod · Minecraft 1.21.1 and 1.21.11</p>
+  <h1>ZollaS's random bow mod</h1>
+  <p class="sub">A configurable bow and crossbow system: volley fire, rapid fire, explosive arrows, arrow velocity from 1 to 10000 m/s, immunity to blast knockback, and a one-press arrow clear, all driven from an in-game menu on Right Shift. It is built for two Minecraft versions and keeps shared worlds safe by limiting guests. This is the working map of the project — how a shot travels from keypress to arrow, what each file is for, and the traps already paid for once.</p>
+  <div class="chips">
+    <span class="chip"><b>version</b>2.0.1</span>
+    <span class="chip"><b>author</b>ZollaS</span>
+    <span class="chip"><b>minecraft</b>1.21.1 · 1.21.11</span>
+    <span class="chip"><b>mod id</b>zollas_random_bow_mod</span>
+    <span class="chip"><b>package</b>net.zollas.randombowmod</span>
+    <span class="chip"><b>namespace</b>zollas_random_bow_mod</span>
+    <span class="chip"><b>jdk</b>21</span>
+  </div>
+</header>
+
+<div class="cols">
+
+<nav class="rail" aria-label="Contents">
+  <ol>
+    <li><a href="#pipeline">How a shot travels</a></li>
+    <li><a href="#files">File map</a></li>
+    <li><a href="#traps">Traps already hit</a></li>
+    <li><a href="#build">Build environment</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<section id="pipeline">
+  <h2>How a shot travels</h2>
+  <p class="lede">Nothing gameplay-related happens on the client. It reads input and draws the menu; every arrow is spawned server-side.</p>
+
+  <div class="figure">
+    <svg viewBox="0 0 700 292" role="img" aria-labelledby="digram-t digram-d">
+      <title id="digram-t">Client to server packet flow</title>
+      <desc id="digram-d">The client sends UpdateSettingsPayload when a menu control changes, and FireRequestPayload on click or while the use key is held. The server stores settings per player, applies a rate clamp, then FireHandler spawns the arrow entities.</desc>
+
+      <line x1="350" y1="8" x2="350" y2="284" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"/>
+      <text x="10" y="20" fill="var(--muted)" font-size="11.5" font-family="IBM Plex Mono, monospace" letter-spacing="1.4">CLIENT</text>
+      <text x="440" y="20" fill="var(--muted)" font-size="11.5" font-family="IBM Plex Mono, monospace" letter-spacing="1.4">SERVER</text>
+
+      <g>
+        <rect x="10" y="38" width="230" height="54" rx="3" fill="var(--ember-bg)" stroke="var(--ember)" stroke-width="1"/>
+        <text x="24" y="60" fill="var(--ember)" font-size="13.5" font-weight="600">Right Shift · ZollasScreen</text>
+        <text x="24" y="79" fill="var(--ember)" font-size="12.5">toggle or slider changes</text>
+      </g>
+      <line x1="240" y1="65" x2="432" y2="65" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <text x="336" y="58" text-anchor="middle" fill="var(--ink-soft)" font-size="12" font-family="IBM Plex Mono, monospace">UpdateSettingsPayload</text>
+      <g>
+        <rect x="440" y="38" width="250" height="54" rx="3" fill="var(--pine-bg)" stroke="var(--pine)" stroke-width="1"/>
+        <text x="454" y="60" fill="var(--pine)" font-size="13.5" font-weight="600">PlayerSettingsManager</text>
+        <text x="454" y="79" fill="var(--pine)" font-size="12.5">one settings object per player UUID</text>
+      </g>
+
+      <g>
+        <rect x="10" y="128" width="230" height="54" rx="3" fill="var(--ember-bg)" stroke="var(--ember)" stroke-width="1"/>
+        <text x="24" y="150" fill="var(--ember)" font-size="13.5" font-weight="600">Use key · client tick</text>
+        <text x="24" y="169" fill="var(--ember)" font-size="12.5">once on click, repeats if rapid fire</text>
+      </g>
+      <line x1="240" y1="155" x2="432" y2="155" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <text x="336" y="148" text-anchor="middle" fill="var(--ink-soft)" font-size="12" font-family="IBM Plex Mono, monospace">FireRequestPayload</text>
+      <g>
+        <rect x="440" y="128" width="250" height="54" rx="3" fill="var(--pine-bg)" stroke="var(--pine)" stroke-width="1"/>
+        <text x="454" y="150" fill="var(--pine)" font-size="13.5" font-weight="600">Rate clamp · canFireNow</text>
+        <text x="454" y="169" fill="var(--pine)" font-size="12.5">a spammy client cannot outrun it</text>
+      </g>
+
+      <line x1="565" y1="182" x2="565" y2="212" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+      <g>
+        <rect x="440" y="218" width="250" height="54" rx="3" fill="var(--pine-bg)" stroke="var(--pine)" stroke-width="1"/>
+        <text x="454" y="240" fill="var(--pine)" font-size="13.5" font-weight="600">FireHandler</text>
+        <text x="454" y="259" fill="var(--pine)" font-size="12.5">spawns N arrows across the cone</text>
+      </g>
+
+      <g>
+        <rect x="10" y="218" width="230" height="54" rx="3" fill="none" stroke="var(--line)" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="24" y="240" fill="var(--muted)" font-size="12.5" font-weight="600">UseItemCallback</text>
+        <text x="24" y="258" fill="var(--muted)" font-size="12">cancels the vanilla draw</text>
+      </g>
+
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--muted)"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+  <p class="cap">While any toggle is on, vanilla bow charging is cancelled outright — otherwise a normal shot would stack on top of the custom volley. One real arrow is consumed per fire event, not per projectile, so volleys stay affordable. Settings are re-sent on joining any world, and in multiplayer FireHandler applies the guest limits from trap 15 before a single arrow spawns.</p>
+</section>
+
+<section id="files">
+  <h2>File map</h2>
+  <p class="lede">Two copies of the same code, one per Minecraft version: <code>ZollasRandomBowMod-1.21.1</code> for 1.21.1 (18 Java files, about 1,560 lines) and <code>ZollasRandomBowMod-1.21.11</code> (15 files, about 1,330 lines). The columns give each file's length in each copy; a dash means that version does not have it. A feature added to one copy has to be ported to the other by hand.</p>
+
+  <div class="group">
+    <div class="grouphead">
+      <span class="grouppath">src/main/java/net/zollas/randombowmod</span>
+      <span class="tag srv">server · common</span>
+    </div>
+    <table>
+      <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
+      <tbody>
+        <tr><td class="f">ZollasRandomBowMod.java</td><td class="r">Entry point. Registers the four packet types and their receivers, the vanilla bow override, and respawn and disconnect handling.</td><td class="n">193</td><td class="n">190</td></tr>
+        <tr><td class="f">ZollasSettings.java</td><td class="r">The nine settings, their bounds, and clamping. Velocity is stored in m/s.</td><td class="n">69</td><td class="n">69</td></tr>
+        <tr><td class="f">mixin/PersistentProjectileEntityMixin.java</td><td class="r">Patches vanilla's arrow to detonate and to save its explosive flag. On 1.21.1 it also corrects the impact point — see trap 14.</td><td class="n">92</td><td class="n">85</td></tr>
+        <tr><td class="f">entity/ArrowImpact.java</td><td class="r">The blast, and on 1.21.1 the impact correction, as ordinary code outside the mixin.</td><td class="n">82</td><td class="n">71</td></tr>
+        <tr><td class="f">entity/ExplosiveArrow.java</td><td class="r">Interface the mixin puts on every arrow, carrying the explosive flag.</td><td class="n">15</td><td class="n">15</td></tr>
+        <tr><td class="f">entity/ExplosiveArrowEntity.java</td><td class="r">Legacy. Still registered so arrows in old 1.21.1 saves load; nothing fires it.</td><td class="n">168</td><td class="n">—</td></tr>
+        <tr><td class="f">entity/ModEntities.java</td><td class="r">Registers that legacy entity type.</td><td class="n">30</td><td class="n">—</td></tr>
+        <tr><td class="f">network/FireRequestPayload.java</td><td class="r">Client to server, one per shot. Carries only which hand.</td><td class="n">27</td><td class="n">27</td></tr>
+        <tr><td class="f">network/UpdateSettingsPayload.java</td><td class="r">Client to server, on every menu change, on close, and on joining a world.</td><td class="n">56</td><td class="n">56</td></tr>
+        <tr><td class="f">network/GiveWeaponPayload.java</td><td class="r">Client to server, behind the Bow and Crossbow buttons. Host and operators only.</td><td class="n">24</td><td class="n">24</td></tr>
+        <tr><td class="f">network/ClearArrowsPayload.java</td><td class="r">Client to server, empty. Clears arrows in every dimension. Host and operators only.</td><td class="n">27</td><td class="n">27</td></tr>
+        <tr><td class="f">server/FireHandler.java</td><td class="r">Spawns the volley: cone-scatter maths, ammo, the m/s conversion, and the guest limits.</td><td class="n">167</td><td class="n">167</td></tr>
+        <tr><td class="f">server/ArsenalPermissions.java</td><td class="r">Who counts as host or operator, and the limits everyone else fires under.</td><td class="n">43</td><td class="n">45</td></tr>
+        <tr><td class="f">server/PlayerSettingsManager.java</td><td class="r">Settings per player, the fire-rate clamp, the blast knockback modifier, and the one-time limits notice.</td><td class="n">121</td><td class="n">121</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="group">
+    <div class="grouphead">
+      <span class="grouppath">src/client/java/net/zollas/randombowmod/client</span>
+      <span class="tag cli">client only</span>
+    </div>
+    <table>
+      <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
+      <tbody>
+        <tr><td class="f">gui/ZollasScreen.java</td><td class="r">The menu: four toggles, four sliders, the Bow and Crossbow buttons, and the Clear Arrows and No Blast Knockback corner buttons.</td><td class="n">251</td><td class="n">253</td></tr>
+        <tr><td class="f">ZollasRandomBowModClient.java</td><td class="r">Both keybinds, the tick loop, fire pacing, and settings sync on joining a world.</td><td class="n">168</td><td class="n">171</td></tr>
+        <tr><td class="f">ExplosiveArrowRenderer.java</td><td class="r">Draws the legacy arrow entity.</td><td class="n">21</td><td class="n">—</td></tr>
+        <tr><td class="f">ArsenalClientState.java</td><td class="r">Holds the one settings instance the screen and tick loop share.</td><td class="n">8</td><td class="n">8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="group">
+    <div class="grouphead">
+      <span class="grouppath">resources and build config</span>
+      <span class="tag cfg">supporting</span>
+    </div>
+    <table>
+      <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
+      <tbody>
+        <tr><td class="f">fabric.mod.json</td><td class="r">Mod id, display name, author, entrypoints, and the mixin config. The file most worth checking first when something odd happens.</td><td class="n">1</td><td class="n">1</td></tr>
+        <tr><td class="f">assets/zollas_random_bow_mod/lang/en_us.json</td><td class="r">Everything the player reads: menu labels, the menu title, and the Controls category name.</td><td class="n">21</td><td class="n">19</td></tr>
+        <tr><td class="f">zollas_random_bow_mod.mixins.json</td><td class="r">Declares the arrow mixin to Fabric.</td><td class="n">12</td><td class="n">12</td></tr>
+        <tr><td class="f">data/minecraft/tags/entity_type/arrows.json</td><td class="r">Puts the legacy arrow in vanilla's arrows tag. Folder is <code>entity_type</code>, singular, since 1.21.</td><td class="n">6</td><td class="n">—</td></tr>
+        <tr><td class="f">assets/template-mod/icon.png</td><td class="r">Leftover from the Fabric template. Nothing references it.</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td class="f">build.gradle</td><td class="r">Loom, split source sets, Java 21 release target. The 1.21.11 copy uses the <code>fabric-loom-remap</code> plugin.</td><td class="n">68</td><td class="n">66</td></tr>
+        <tr><td class="f">gradle.properties</td><td class="r">Minecraft, mapping and library versions, the mod version, and the explicit JDK 21 path.</td><td class="n">20</td><td class="n">23</td></tr>
+        <tr><td class="f">gradle/wrapper/gradle-wrapper.properties</td><td class="r">Gradle 8.8 for 1.21.1, which Loom 1.7.4 needs; 9.5.1 for 1.21.11. Do not swap them.</td><td class="n">9</td><td class="n">9</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="traps">
+  <h2>Traps already hit</h2>
+  <p class="lede">Each of these cost a debugging session once. The numbers are permanent, so "number six" always means the same trap, and new ones are only ever added to the end.</p>
+
+  <div class="traps">
+    <div class="trap"><span class="num">01</span><div>
+      <h3>The mod id and entrypoints in fabric.mod.json</h3>
+      <p>Must be <code>zollas_random_bow_mod</code>, with <code>net.zollas.randombowmod.ZollasRandomBowMod</code> as main and <code>net.zollas.randombowmod.client.ZollasRandomBowModClient</code> as client.</p>
+      <p>If a build ever loads a mod called "template-mod", a leftover template file has overwritten this one again.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">02</span><div>
+      <h3>ClientPlayNetworking comes from Fabric, not Minecraft</h3>
+      <p>The import is <code>net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking</code>. There is no such class under <code>net.minecraft.client.network</code>.</p>
+      <p>Got wrong twice.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">03</span><div>
+      <h3>Math.round on a double returns a long</h3>
+      <p>Assigning it to the <code>arrowsAmount</code> int field needs an explicit <code>(int)</code> cast.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">04</span><div>
+      <h3>The abstract method is getDefaultItemStack</h3>
+      <p>In 1.21.1 Yarn mappings <code>PersistentProjectileEntity</code> declares <code>getDefaultItemStack()</code>, not <code>asItemStack()</code>.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">05</span><div>
+      <h3>A custom entity without a renderer crashes on sight</h3>
+      <p>The <code>EntityRendererRegistry.register</code> call in <code>onInitializeClient</code> is load-bearing. Drop it and the game throws the instant an explosive arrow needs drawing.</p>
+      <p>Symptom to recognise: everything renders fine until the moment one is fired.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">5b</span><div>
+      <h3>dimensions takes two floats</h3>
+      <p>In this API version <code>FabricEntityTypeBuilder.dimensions(...)</code> takes width and height directly, not an <code>EntityDimensions</code> object.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">06</span><div>
+      <h3>Every spawned entity needs its own ItemStack copy</h3>
+      <p>Passing one shared stack into many entities and then decrementing it empties the stack every one of them holds. Always hand each entity a <code>copyWithCount(1)</code>.</p>
+      <p>This surfaced only much later, as "cannot encode empty ItemStack" on autosave — the longest hunt in the project.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">07</span><div>
+      <h3>Receiver callbacks hand you a PlayerEntity</h3>
+      <p>Not a <code>ServerPlayerEntity</code>. Cast it explicitly before use.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">08</span><div>
+      <h3>Explosions shove arrows that are still in flight</h3>
+      <p>The blast applies velocity to every nearby entity, arrows included. <code>explode()</code> snapshots nearby projectile velocities before the explosion and restores them after, so a chain detonation does not scatter the rest of the volley.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">09</span><div>
+      <h3>setVelocity does not take metres per second</h3>
+      <p>It takes blocks per tick. One block is one metre and there are twenty ticks in a second, so the menu value is divided by <code>TICKS_PER_SECOND</code> in <code>FireHandler</code> before it reaches the arrow. The old hard-coded <code>3.0f</code> was 60 m/s all along, which is now the slider's default.</p>
+      <p>The top of the slider is 500 blocks per tick, which carries the arrow past the loaded chunks before the next tick runs — it is culled, nothing lands, and the bow appears dead. <code>FireHandler</code> therefore caps what physics receives at <code>MAX_BLOCKS_PER_TICK</code>, currently 100. The menu still displays whatever the player chose.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">10</span><div>
+      <h3>An arrow's coordinates during a hit callback are stale</h3>
+      <p>They describe where it began the tick, not where it struck. <code>explode()</code> takes its position from the <code>HitResult</code>, and <code>snapTo()</code> moves the entity onto the impact point before <code>super</code> runs — vanilla emits the landing sound at the entity's own coordinates, so the explosion and the sound each needed handling.</p>
+      <p>Found through the velocity slider: at the top of the range the detonation and then the thud both arrived next to the shooter, a whole flight behind the target. At vanilla speed the same bug was there and invisible.</p>
+      <p>A vanilla <code>ArrowEntity</code> cannot be corrected from outside, which first pushed the mod onto a bespoke entity — and that broke <code>@e[type=arrow]</code> and tipped arrows, since the selector matches one exact id and nothing can be aliased onto it. The mixin replaced that: the mod fires genuine <code>minecraft:arrow</code> entities again, and the patch supplies both the impact correction and the detonation.</p>
+      <p>Land the arrow a tenth of a block <em>short</em> of the impact point, not exactly on it. Vanilla reads a landed arrow's facing from the vector between its position and the hit point, then nudges it back along that vector so the shaft protrudes. Snap it exactly onto the hit point and that vector is zero — the arrow loses its orientation and lies flat in the surface.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">11</span><div>
+      <h3>Static maps outlive the world; world time does not</h3>
+      <p><code>PlayerSettingsManager</code> keys both its maps by player UUID in static fields, so they survive into the next world. <code>getWorld().getTime()</code> does not — it restarts near zero in a freshly created world. A fire tick recorded at 500000 in an established world therefore sits in the future of a new one, and the rate limiter refuses every shot until the new clock catches up.</p>
+      <p>The symptom was a brand new world where no toggle would fire, that healed after closing and reopening the game — because that is what clears a static map. <code>canFireNow</code> now treats any backwards jump as a fresh start, and per-player state is dropped on disconnect.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">12</span><div>
+      <h3>The client must push its settings on joining a world</h3>
+      <p>The server's copy now resets per world, so <code>ClientPlayConnectionEvents.JOIN</code> has to re-send it. Any setting added later must ride along in that payload or it will silently run at its default.</p>
+      <p>Do not send directly from the JOIN callback: the channel is not reliably ready yet, <code>canSend</code> returns false, and the sync is dropped with no error. The join sets a flag and the client tick retries until it goes through.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">13</span><div>
+      <h3>Cancel blast push with the attribute, not a mixin</h3>
+      <p>Vanilla's explosion scales its push on a living entity by one minus <code>explosion_knockback_resistance</code>, and explosion damage types sit in the <code>no_knockback</code> tag — so the blast push is the only thing that moves a player. No Blast Knockback adds a temporary +1.0 modifier to that attribute. Both facts were checked against the 1.21.1 jar.</p>
+      <p>Temporary modifiers never reach the save file, so they cannot outlive the mod — but they also vanish when a dying player's entity is replaced. <code>ServerPlayerEvents.AFTER_RESPAWN</code> reapplies it from the settings, which survive because they are keyed by UUID.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">14</span><div>
+      <h3>The impact correction is 1.21.1 only — on 1.21.11 it makes arrows bounce</h3>
+      <p>Mojang's projectile rework changed landing. In 1.21.11, <code>applyCollision</code> moves the arrow onto the hit point <em>before</em> <code>onBlockHit</code> runs, so the stale position behind trap 10 no longer exists. <code>onBlockHit</code> then zeroes the velocity and never moves the arrow forward again.</p>
+      <p>Pulling the arrow back 0.1 block on 1.21.11 therefore left it hovering past the 0.06 margin <code>shouldFall()</code> checks: it dropped, landed, was pulled back, and bounced forever. The 1.21.11 build has no correction at all. The 1.21.11 behaviour was read from that version's bytecode. The 1.21.1 build keeps its correction because, there, the tick moves the arrow forward after the hit and cancels the pull-back out — reasoned from that version's landing code, not re-checked in bytecode, and no bounce has been reported on it.</p>
+    </div></div>
+
+    <div class="trap"><span class="num">15</span><div>
+      <h3>In multiplayer, guests get limits and the host keeps everything</h3>
+      <p><code>ArsenalPermissions.isTrusted</code> is true for the world's host — the player whose game is the server, as when inviting friends through Essential — or anyone with operator level 2. Everyone else cannot use Clear Arrows or the weapon buttons, never fires explosive arrows, and is held to 20 arrows a volley and 5 shots a second. They are told once in chat. No Blast Knockback is unrestricted because it only affects the player using it.</p>
+      <p>Limits are applied when a shot fires, never written into the stored settings, so a later /op takes effect on the very next shot. The permission API differs per version: <code>hasPermissionLevel(2)</code> and <code>isHost(getGameProfile())</code> on 1.21.1, <code>getPermissions().hasPermission(new Permission.Level(PermissionLevel.GAMEMASTERS))</code> and <code>isHost(getPlayerConfigEntry())</code> on 1.21.11. Every client-to-server message is now behind <code>canSend</code>, so the mod stays quiet on a server that lacks it. Everyone must run the same mod version — the settings packet layout changes between versions.</p>
+    </div></div>
+  </div>
+</section>
+
+<section id="build">
+  <h2>Build environment</h2>
+  <p class="lede">This combination is known to work. The pinned versions are not preferences — each one is load-bearing.</p>
+
+  <dl class="env">
+    <div class="cell">
+      <dt>Java</dt>
+      <dd>JDK 21</dd>
+      <p class="why">Not 17, not 25. Both 1.21.1 and 1.21.11 require it. The system default here is Java 8, which is why the path is written out explicitly in gradle.properties.</p>
+    </div>
+    <div class="cell">
+      <dt>Gradle wrapper · 1.21.1 copy</dt>
+      <dd>gradle-8.8-bin.zip</dd>
+      <p class="why">Fabric Loom 1.7.4 cannot run on Gradle 9. A fresh template download defaults to 9.5.1, so the wrapper properties file has to be corrected by hand after regenerating it.</p>
+    </div>
+    <div class="cell">
+      <dt>JDK path in gradle.properties</dt>
+      <dd>org.gradle.java.home</dd>
+      <p class="why">Written as a Windows short path, because a non-ASCII character in the username breaks properties-file parsing otherwise.</p>
+    </div>
+    <div class="cell">
+      <dt>Temp directory</dt>
+      <dd>set TEMP to C:\uatmp</dd>
+      <p class="why">The daemon fails to start otherwise, with "invalid argument: connect" deep in Java's pipe setup. Java opens an internal socket file under the temp path, and the accented character in the Windows username breaks it. Same root cause as the gradle.properties short path, different symptom.</p>
+    </div>
+    <div class="cell">
+      <dt>1.21.11 port</dt>
+      <dd>ZollasRandomBowMod-1.21.11 · Loom 1.17 · Gradle 9.5.1</dd>
+      <p class="why">A separate copy, so the 1.21.1 build keeps working. Yarn 1.21.11+build.6 and Fabric API 0.141.6. Renames to know: getWorld became getEntityWorld, getPos became getEntityPos, NBT saving moved to ReadView/WriteView, keybind categories became registered objects, and text colours need a full ARGB value. The retired custom arrow entity was left out of this copy.</p>
+    </div>
+    <div class="cell">
+      <dt>No refmap is correct</dt>
+      <dd>mixin names baked in at remap</dd>
+      <p class="why">Loom 1.17 writes Minecraft's runtime method names directly into the compiled mixin, so the 1.21.11 jar has no refmap file. Checked: all four patch points resolve to real 1.21.11 methods.</p>
+    </div>
+    <div class="cell">
+      <dt>2.0.0 is a clean break</dt>
+      <dd>new mod id, namespace and package</dd>
+      <p class="why">Version 2.0.0 renamed the mod id, the resource namespace, the Java package, the main classes and the project folders. Fabric no longer sees a 2.0.0 jar as the same mod as anything older, so an old jar left in a mods folder loads alongside it instead of being refused — always delete the old one. Keybinds are stored under the new names, so they started over at their defaults, and every player needs 2.0.0 or later.</p>
+    </div>
+    <div class="cell">
+      <dt>Source sets</dt>
+      <dd>src/main · src/client</dd>
+      <p class="why">Split by Loom. Client-only classes must not be referenced from common code, or the mod breaks on a dedicated server.</p>
+    </div>
+  </dl>
+</section>
+
+<footer>
+  Debug output is gated behind the Debugging toggle and off by default — keep new troubleshooting behind it rather than leaving raw prints in the fire path. When something crashes, the crash report or the tail of latest.log is what actually finds it; a screenshot summary has never been enough.
+</footer>
+
+</main>
+</div>
+</div>
+
+</body>
+</html>

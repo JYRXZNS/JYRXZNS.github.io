@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZollaS's Random Bow Mod</title>
+<meta name="description" content="Turn bows and crossbows into a configurable arsenal: huge volleys, rapid fire, explosive arrows and more, all from one menu. A Fabric mod for Minecraft 1.21.1 and 1.21.11.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Pixelify+Sans:wght@500&display=swap">
+<style>
+:root{
+  --night:#0B0C22;
+  --night-2:#121439;
+  --night-3:#1A1D4F;
+  --line:#2A2E6E;
+  --peri:#7C90FF;
+  --peri-soft:#B9C3FF;
+  --text:#EDEFFF;
+  --muted:#A5AAD8;
+  --mustard:#D6C23C;
+  --mustard-deep:#8F7F1C;
+  --slab:"Roboto Slab",Rockwell,Georgia,serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,ui-monospace,monospace;
+  --pixel:"Pixelify Sans","Courier New",monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--night);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--peri)}
+:focus-visible{outline:2px solid var(--mustard);outline-offset:3px}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* hero */
+.hero{padding:64px 0 56px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:40px;align-items:center}
+.logo{width:180px;height:180px;border-radius:14px;border:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+h1{font-family:var(--slab);font-weight:800;font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.01em;margin:0;color:var(--peri);text-shadow:3px 3px 0 var(--mustard-deep),5px 5px 0 rgba(0,0,0,.35);text-wrap:balance}
+.tagline{margin:18px 0 0;font-size:19px;color:var(--peri-soft);max-width:52ch}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-block;padding:12px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:16px}
+.btn.primary{background:var(--mustard);color:#1B1604}
+.btn.primary:hover{background:#E4D24E}
+.btn.ghost{border:1px solid var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--peri)}
+
+@media (max-width:640px){.hero-grid{grid-template-columns:1fr;gap:24px}.logo{width:120px;height:120px}}
+
+section{padding:64px 0 8px}
+h2{font-family:var(--slab);font-weight:600;font-size:clamp(26px,3.4vw,34px);margin:0 0 8px;color:var(--text);text-wrap:balance}
+.lede{margin:0 0 28px;color:var(--muted);max-width:62ch}
+
+/* in-game menu replica */
+.stage{background:#05060F;border:1px solid var(--line);border-radius:12px;padding:22px;overflow:hidden}
+.mc{font-family:var(--pixel);color:#fff;max-width:640px;margin:0 auto}
+.mc-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mc-title{text-align:center;margin:18px 0 14px;font-size:17px;text-shadow:2px 2px 0 #3F3F3F}
+.mc-panel{width:100%;max-width:330px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.mc-gap{height:8px}
+.mc-row{display:flex;justify-content:space-between;gap:10px;margin-top:10px}
+.mcb{font:inherit;font-size:15px;color:#fff;background:#6E6E6E;border:2px solid #000;box-shadow:inset 2px 2px 0 #A8A8A8,inset -2px -2px 0 #4A4A4A;padding:6px 10px;min-height:34px;text-shadow:2px 2px 0 #3F3F3F;cursor:pointer;text-align:center}
+.mcb:hover{background:#7E86C8;box-shadow:inset 2px 2px 0 #B8C0FF,inset -2px -2px 0 #4F5694}
+.mcb.small{min-width:0}
+.mcb.half{width:96px}
+.mcs{position:relative;height:34px;background:#1E1E1E;border:2px solid #000}
+.mcs input{-webkit-appearance:none;appearance:none;position:absolute;inset:0;width:100%;height:100%;margin:0;background:transparent;cursor:pointer}
+.mcs input::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:30px;background:#8A8A8A;border:none;box-shadow:inset 2px 2px 0 #C6C6C6,inset -2px -2px 0 #555}
+.mcs input::-moz-range-thumb{width:12px;height:30px;background:#8A8A8A;border:none;border-radius:0;box-shadow:inset 2px 2px 0 #C6C6C6,inset -2px -2px 0 #555}
+.mcs input:focus-visible{outline:2px solid var(--mustard);outline-offset:2px}
+.mcs span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;pointer-events:none;text-shadow:2px 2px 0 #3F3F3F;white-space:nowrap}
+.stage-note{text-align:center;color:var(--muted);font-size:14px;margin:16px 0 0}
+
+/* reference lists */
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:36px}
+.group{background:var(--night-2);border:1px solid var(--line);border-radius:12px;padding:22px 22px 10px}
+.group h3{margin:0 0 12px;font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--mustard)}
+.item{padding:12px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:none}
+.item b{display:block;font-weight:600;color:var(--text)}
+.item p{margin:2px 0 0;color:var(--muted);font-size:15.5px}
+.item p + p{margin-top:6px}
+
+/* keys */
+.keys{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.key{display:flex;align-items:center;gap:16px;background:var(--night-2);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+kbd{font-family:var(--mono);font-size:14px;color:#1B1604;background:var(--mustard);border-radius:6px;padding:6px 10px;box-shadow:0 3px 0 var(--mustard-deep);white-space:nowrap}
+.key span{color:var(--text)}
+
+/* install */
+.install{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.install ol{margin:0;padding-left:22px}
+.install li{margin:0 0 10px;color:var(--muted)}
+.install li b{color:var(--text);font-weight:600}
+.pill{display:inline-block;font-family:var(--mono);font-size:13px;color:var(--peri-soft);background:var(--night-3);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+
+/* multiplayer */
+.mp{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.mp ul{margin:0;padding-left:20px;color:var(--muted)}
+.mp li{margin:0 0 8px}
+.callout{margin-top:20px;padding:16px 20px;border-left:3px solid var(--mustard);background:var(--night-2);color:var(--muted);border-radius:0}
+
+/* troubleshooting */
+details{background:var(--night-2);border:1px solid var(--line);border-radius:12px;margin:0 0 12px}
+summary{cursor:pointer;padding:16px 20px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--mustard)}
+details[open] summary::after{content:"−"}
+details .body{padding:0 20px 16px;color:var(--muted)}
+details .body ul{margin:6px 0 0;padding-left:20px}
+
+footer{margin-top:72px;padding:28px 0 48px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <img class="logo" src="logo.png" alt="ZollaS logo" width="180" height="180">
+    <div>
+      <p class="eyebrow">Fabric mod · Minecraft 1.21.1 &amp; 1.21.11</p>
+      <h1>ZollaS's random bow mod</h1>
+      <p class="tagline">Turn bows and crossbows into a configurable arsenal: huge volleys, rapid fire, explosive arrows and more, all from one menu.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://www.curseforge.com/minecraft/search?search=zollas%20random%20bow%20mod">Download on CurseForge</a>
+        <a class="btn ghost" href="#install">How to install</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="menu">
+  <h2>The menu</h2>
+  <p class="lede">Press <b>Right Shift</b> in game and this is what you get. This one works too — click the buttons and drag the sliders to see the ranges.</p>
+
+  <div class="stage">
+    <div class="mc" aria-label="Replica of the in-game menu">
+      <div class="mc-top">
+        <button class="mcb small" type="button" data-toggle="No Blast Knockback">No Blast Knockback: OFF</button>
+        <button class="mcb small" type="button" title="In game, this clears every arrow in the world">Clear Arrows</button>
+      </div>
+      <div class="mc-title">ZollaS's random bow mod</div>
+      <div class="mc-panel">
+        <button class="mcb" type="button" data-toggle="Ultra Bow/Crossbow">Ultra Bow/Crossbow: OFF</button>
+        <button class="mcb" type="button" data-toggle="Rapid Fire">Rapid Fire: OFF</button>
+        <button class="mcb" type="button" data-toggle="Explosive Arrows">Explosive Arrows: OFF</button>
+        <button class="mcb" type="button" data-toggle="Debugging">Debugging: OFF</button>
+        <div class="mc-gap"></div>
+        <div class="mcs"><input type="range" min="10" max="2000" step="1" value="10" data-slider="arrows" aria-label="Arrows Amount"><span></span></div>
+        <div class="mcs"><input type="range" min="0" max="180" step="1" value="0" data-slider="scatter" aria-label="Scattering"><span></span></div>
+        <div class="mcs"><input type="range" min="0.01" max="10" step="0.01" value="5" data-slider="speed" aria-label="Arrow Shooting Speed"><span></span></div>
+        <div class="mcs"><input type="range" min="0" max="1" step="0.001" value="0.4445" data-slider="velocity" aria-label="Arrow Velocity"><span></span></div>
+        <div class="mc-row">
+          <button class="mcb half" type="button" title="In game, this gives you a bow">Bow</button>
+          <button class="mcb half" type="button" title="In game, this gives you a crossbow">Crossbow</button>
+        </div>
+      </div>
+    </div>
+    <p class="stage-note">These are the default settings. Nothing is saved here — it's just a preview.</p>
+  </div>
+
+  <div class="groups">
+    <div class="group">
+      <h3>Toggles</h3>
+      <div class="item"><b>Ultra Bow/Crossbow</b><p>Every shot fires a whole volley instead of one arrow. How many is set by Arrows Amount.</p></div>
+      <div class="item"><b>Rapid Fire</b><p>Hold the use button to keep firing, at the pace set by Arrow Shooting Speed.</p></div>
+      <div class="item"><b>Explosive Arrows</b><p>Arrows explode like TNT where they land, breaking blocks around them.</p></div>
+      <div class="item"><b>Debugging</b><p>Explains in chat why a shot did or didn't fire. Handy if your bow seems to do nothing.</p></div>
+      <div class="item"><p>While Ultra Bow, Rapid Fire or Explosive Arrows is on, the mod takes over your bow: one click fires straight away, with no drawing back.</p></div>
+    </div>
+
+    <div class="group">
+      <h3>Sliders</h3>
+      <div class="item"><b>Arrows Amount · 10 to 2000</b><p>Arrows per volley. Only used when Ultra Bow is on.</p></div>
+      <div class="item"><b>Scattering · 0° to 180°</b><p>How wide the volley spreads. 0° sends every arrow in one line; 180° sprays them everywhere in front of you.</p></div>
+      <div class="item"><b>Arrow Shooting Speed · 0.01 to 10 ticks</b><p>Time between shots with Rapid Fire. Lower is faster. Anything under 1.5 fires every tick, which is 20 shots a second.</p></div>
+      <div class="item"><b>Arrow Velocity · 1 to 10000 m/s</b><p>How fast arrows fly. Normal arrows fly at about 60 m/s. Anything above 2000 m/s flies at 2000 m/s, so arrows still land instead of vanishing.</p></div>
+    </div>
+
+    <div class="group">
+      <h3>Buttons</h3>
+      <div class="item"><b>No Blast Knockback</b><p>Explosions still hurt you, but stop pushing you around. Works on every explosion, and stays on after you respawn.</p></div>
+      <div class="item"><b>Clear Arrows</b><p>Removes every arrow lying around, in every dimension that's loaded. Also on a key — see below.</p></div>
+      <div class="item"><b>Bow and Crossbow</b><p>Put a bow or a crossbow straight into your inventory. If it's full, the weapon drops at your feet.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="keys">
+  <h2>Keys</h2>
+  <p class="lede">Change either one under <b>Options → Controls → Key Binds</b>, in the <b>ZollaS's random bow mod</b> section.</p>
+  <div class="keys">
+    <div class="key"><kbd>Right Shift</kbd><span>Open the menu</span></div>
+    <div class="key"><kbd>Delete</kbd><span>Clear every arrow, without opening the menu</span></div>
+  </div>
+</section>
+
+<section id="ammo">
+  <h2>Arrows and ammo</h2>
+  <p class="lede">A whole volley only uses <b>one</b> arrow from your inventory, however many it fires. You need regular arrows — tipped and spectral arrows don't count. In creative mode you don't need any at all. If you're out, you'll hear a click instead of a shot.</p>
+</section>
+
+<section id="install">
+  <h2>How to install</h2>
+  <p class="lede">Pick the file that matches your Minecraft version: <span class="pill">1.21.1</span> or <span class="pill">1.21.11</span>.</p>
+  <div class="install">
+    <div class="group">
+      <h3>With the CurseForge app</h3>
+      <ol>
+        <li><b>Create a profile</b> for Minecraft 1.21.1 or 1.21.11, choosing <b>Fabric</b> as the loader.</li>
+        <li>Search for <b>ZollaS's random bow mod</b> and click Install. <b>Fabric API</b> is added automatically.</li>
+        <li><b>Play.</b> Press Right Shift in a world to open the menu.</li>
+      </ol>
+    </div>
+    <div class="group">
+      <h3>Manually</h3>
+      <ol>
+        <li><b>Install Fabric Loader</b> for your Minecraft version from fabricmc.net.</li>
+        <li><b>Download Fabric API</b> for the same version.</li>
+        <li><b>Put both jars</b> — Fabric API and this mod — into your <span class="pill">mods</span> folder.</li>
+        <li><b>Launch</b> the Fabric profile. You need Java 21, which the official launcher includes.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="multiplayer">
+  <h2>Multiplayer</h2>
+  <p class="lede">It works on servers and in worlds you share with friends, like through Essential. So nobody can wreck a shared world, not everyone gets everything:</p>
+  <div class="mp">
+    <div class="group">
+      <h3>Host and operators</h3>
+      <ul>
+        <li>Every feature, with no limits</li>
+        <li>Clear Arrows, and the Bow and Crossbow buttons</li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Everyone else</h3>
+      <ul>
+        <li>No explosive arrows</li>
+        <li>At most 20 arrows per volley</li>
+        <li>At most 5 shots a second</li>
+        <li>Can't use Clear Arrows or the weapon buttons</li>
+        <li>No Blast Knockback still works</li>
+      </ul>
+    </div>
+  </div>
+  <p class="callout"><b>Everyone playing together needs the same version of the mod.</b> To give a friend full access, make them an operator with <span class="pill">/op name</span> — that needs cheats turned on in the world.</p>
+</section>
+
+<section id="help">
+  <h2>If something's wrong</h2>
+  <details>
+    <summary>My bow doesn't shoot</summary>
+    <div class="body">
+      <ul>
+        <li>Do you have <b>regular arrows</b> in your inventory? Tipped and spectral arrows don't count. A click sound means you're out.</li>
+        <li>Make sure you're holding a <b>bow or crossbow</b>.</li>
+        <li>Turn on <b>Debugging</b> in the menu and shoot again — chat tells you exactly why.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>Minecraft won't start</summary>
+    <div class="body">
+      <ul>
+        <li>Check there's only <b>one copy</b> of this mod in your mods folder. Delete older versions.</li>
+        <li>Check <b>Fabric API</b> is installed.</li>
+        <li>Check the mod file matches your Minecraft version — the 1.21.11 file has <span class="pill">+1.21.11</span> in its name.</li>
+      </ul>
+    </div>
+  </details>
+  <details>
+    <summary>My volleys are smaller than I set, or explosions are off</summary>
+    <div class="body">That's the multiplayer limit. Only the host and operators get explosive arrows, volleys over 20, and more than 5 shots a second. A chat message says so the first time it applies.</div>
+  </details>
+  <details>
+    <summary>Explosions keep throwing me around</summary>
+    <div class="body">Turn on <b>No Blast Knockback</b>, the button in the top-left corner of the menu.</div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>ZollaS's random bow mod · Made by ZollaS · All rights reserved</span>
+    <a href="field-guide.html">How it works, for modders →</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.querySelectorAll('[data-toggle]').forEach(function (btn) {
+    var on = false;
+    btn.addEventListener('click', function () {
+      on = !on;
+      btn.textContent = btn.getAttribute('data-toggle') + ': ' + (on ? 'ON' : 'OFF');
+    });
+  });
+
+  var labels = {
+    arrows: function (v) { return 'Arrows Amount: ' + Math.round(v); },
+    scatter: function (v) { return 'Scattering: ' + Math.round(v) + '°'; },
+    speed: function (v) { return 'Arrow Shooting Speed: ' + Number(v).toFixed(2) + ' ticks'; },
+    // Same curve as the in-game slider: 1 to 10000 m/s on a log scale.
+    velocity: function (t) { return 'Arrow Velocity: ' + Math.round(Math.pow(10000, Number(t))) + ' m/s'; }
+  };
+
+  document.querySelectorAll('[data-slider]').forEach(function (input) {
+    var span = input.nextElementSibling;
+    var fmt = labels[input.getAttribute('data-slider')];
+    function update() { span.textContent = fmt(input.value); }
+    input.addEventListener('input', update);
+    update();
+  });
+})();
+</script>
+</body>
+</html>
