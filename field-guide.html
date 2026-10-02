@@ -180,9 +180,9 @@ a{color:var(--ember)}
     <span class="chip"><b>version</b>2.0.1</span>
     <span class="chip"><b>author</b>ZollaS</span>
     <span class="chip"><b>minecraft</b>1.21.1 · 1.21.11</span>
-    <span class="chip"><b>mod id</b>zollas_random_bow_mod</span>
-    <span class="chip"><b>package</b>net.zollas.randombowmod</span>
-    <span class="chip"><b>namespace</b>zollas_random_bow_mod</span>
+    <span class="chip"><b>mod id</b>zollas_arsenal</span>
+    <span class="chip"><b>package</b>net.zollas.arsenal</span>
+    <span class="chip"><b>namespace</b>zollas_arsenal</span>
     <span class="chip"><b>jdk</b>21</span>
   </div>
 </header>
@@ -264,17 +264,17 @@ a{color:var(--ember)}
 
 <section id="files">
   <h2>File map</h2>
-  <p class="lede">Two copies of the same code, one per Minecraft version: <code>ZollasRandomBowMod-1.21.1</code> for 1.21.1 (18 Java files, about 1,560 lines) and <code>ZollasRandomBowMod-1.21.11</code> (15 files, about 1,330 lines). The columns give each file's length in each copy; a dash means that version does not have it. A feature added to one copy has to be ported to the other by hand.</p>
+  <p class="lede">Two copies of the same code, one per Minecraft version: <code>ZollasArsenal-1.21.1</code> for 1.21.1 (18 Java files, about 1,560 lines) and <code>ZollasArsenal-1.21.11</code> (15 files, about 1,330 lines). The columns give each file's length in each copy; a dash means that version does not have it. A feature added to one copy has to be ported to the other by hand.</p>
 
   <div class="group">
     <div class="grouphead">
-      <span class="grouppath">src/main/java/net/zollas/randombowmod</span>
+      <span class="grouppath">src/main/java/net/zollas/arsenal</span>
       <span class="tag srv">server · common</span>
     </div>
     <table>
       <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
       <tbody>
-        <tr><td class="f">ZollasRandomBowMod.java</td><td class="r">Entry point. Registers the four packet types and their receivers, the vanilla bow override, and respawn and disconnect handling.</td><td class="n">193</td><td class="n">190</td></tr>
+        <tr><td class="f">ZollasArsenal.java</td><td class="r">Entry point. Registers the four packet types and their receivers, the vanilla bow override, and respawn and disconnect handling.</td><td class="n">193</td><td class="n">190</td></tr>
         <tr><td class="f">ZollasSettings.java</td><td class="r">The nine settings, their bounds, and clamping. Velocity is stored in m/s.</td><td class="n">69</td><td class="n">69</td></tr>
         <tr><td class="f">mixin/PersistentProjectileEntityMixin.java</td><td class="r">Patches vanilla's arrow to detonate and to save its explosive flag. On 1.21.1 it also corrects the impact point — see trap 14.</td><td class="n">92</td><td class="n">85</td></tr>
         <tr><td class="f">entity/ArrowImpact.java</td><td class="r">The blast, and on 1.21.1 the impact correction, as ordinary code outside the mixin.</td><td class="n">82</td><td class="n">71</td></tr>
@@ -294,14 +294,14 @@ a{color:var(--ember)}
 
   <div class="group">
     <div class="grouphead">
-      <span class="grouppath">src/client/java/net/zollas/randombowmod/client</span>
+      <span class="grouppath">src/client/java/net/zollas/arsenal/client</span>
       <span class="tag cli">client only</span>
     </div>
     <table>
       <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
       <tbody>
         <tr><td class="f">gui/ZollasScreen.java</td><td class="r">The menu: four toggles, four sliders, the Bow and Crossbow buttons, and the Clear Arrows and No Blast Knockback corner buttons.</td><td class="n">251</td><td class="n">253</td></tr>
-        <tr><td class="f">ZollasRandomBowModClient.java</td><td class="r">Both keybinds, the tick loop, fire pacing, and settings sync on joining a world.</td><td class="n">168</td><td class="n">171</td></tr>
+        <tr><td class="f">ZollasArsenalClient.java</td><td class="r">Both keybinds, the tick loop, fire pacing, and settings sync on joining a world.</td><td class="n">168</td><td class="n">171</td></tr>
         <tr><td class="f">ExplosiveArrowRenderer.java</td><td class="r">Draws the legacy arrow entity.</td><td class="n">21</td><td class="n">—</td></tr>
         <tr><td class="f">ArsenalClientState.java</td><td class="r">Holds the one settings instance the screen and tick loop share.</td><td class="n">8</td><td class="n">8</td></tr>
       </tbody>
@@ -317,8 +317,8 @@ a{color:var(--ember)}
       <thead><tr><th></th><th></th><th class="n">1.21.1</th><th class="n">1.21.11</th></tr></thead>
       <tbody>
         <tr><td class="f">fabric.mod.json</td><td class="r">Mod id, display name, author, entrypoints, and the mixin config. The file most worth checking first when something odd happens.</td><td class="n">1</td><td class="n">1</td></tr>
-        <tr><td class="f">assets/zollas_random_bow_mod/lang/en_us.json</td><td class="r">Everything the player reads: menu labels, the menu title, and the Controls category name.</td><td class="n">21</td><td class="n">19</td></tr>
-        <tr><td class="f">zollas_random_bow_mod.mixins.json</td><td class="r">Declares the arrow mixin to Fabric.</td><td class="n">12</td><td class="n">12</td></tr>
+        <tr><td class="f">assets/zollas_arsenal/lang/en_us.json</td><td class="r">Everything the player reads: menu labels, the menu title, and the Controls category name.</td><td class="n">21</td><td class="n">19</td></tr>
+        <tr><td class="f">zollas_arsenal.mixins.json</td><td class="r">Declares the arrow mixin to Fabric.</td><td class="n">12</td><td class="n">12</td></tr>
         <tr><td class="f">data/minecraft/tags/entity_type/arrows.json</td><td class="r">Puts the legacy arrow in vanilla's arrows tag. Folder is <code>entity_type</code>, singular, since 1.21.</td><td class="n">6</td><td class="n">—</td></tr>
         <tr><td class="f">assets/template-mod/icon.png</td><td class="r">Leftover from the Fabric template. Nothing references it.</td><td class="n">—</td><td class="n">—</td></tr>
         <tr><td class="f">build.gradle</td><td class="r">Loom, split source sets, Java 21 release target. The 1.21.11 copy uses the <code>fabric-loom-remap</code> plugin.</td><td class="n">68</td><td class="n">66</td></tr>
@@ -336,7 +336,7 @@ a{color:var(--ember)}
   <div class="traps">
     <div class="trap"><span class="num">01</span><div>
       <h3>The mod id and entrypoints in fabric.mod.json</h3>
-      <p>Must be <code>zollas_random_bow_mod</code>, with <code>net.zollas.randombowmod.ZollasRandomBowMod</code> as main and <code>net.zollas.randombowmod.client.ZollasRandomBowModClient</code> as client.</p>
+      <p>Must be <code>zollas_arsenal</code>, with <code>net.zollas.arsenal.ZollasArsenal</code> as main and <code>net.zollas.arsenal.client.ZollasArsenalClient</code> as client.</p>
       <p>If a build ever loads a mod called "template-mod", a leftover template file has overwritten this one again.</p>
     </div></div>
 
@@ -456,7 +456,7 @@ a{color:var(--ember)}
     </div>
     <div class="cell">
       <dt>1.21.11 port</dt>
-      <dd>ZollasRandomBowMod-1.21.11 · Loom 1.17 · Gradle 9.5.1</dd>
+      <dd>ZollasArsenal-1.21.11 · Loom 1.17 · Gradle 9.5.1</dd>
       <p class="why">A separate copy, so the 1.21.1 build keeps working. Yarn 1.21.11+build.6 and Fabric API 0.141.6. Renames to know: getWorld became getEntityWorld, getPos became getEntityPos, NBT saving moved to ReadView/WriteView, keybind categories became registered objects, and text colours need a full ARGB value. The retired custom arrow entity was left out of this copy.</p>
     </div>
     <div class="cell">
